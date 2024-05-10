@@ -43,6 +43,7 @@ export default function SearchBooks() {
       enableEditing: false,
       enableSorting: false,
       enableColumnActions: false,
+      enablePinning: true,
       size: 80,
       Cell: ({ row }) => (
         <Flex gap="md">

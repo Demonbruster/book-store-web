@@ -2,11 +2,11 @@ import { IBook } from '@/types/Book';
 import { Card as MCard, Image, Text, Badge, Button, Group, NumberFormatter, MantineStyleProps } from '@mantine/core';
 import { IconShoppingCart } from '@tabler/icons-react';
 
-export type ICard = Omit<IBook, 'Id'> & { price: number, onClick: () => void } & {style?:MantineStyleProps}
+export type ICard = Omit<IBook, 'Id'> & { price: number, onClick: () => void } & { style?: MantineStyleProps }
 
 export default function Card(props: ICard) {
   return (
-    <MCard {...props.style} shadow="sm" padding="lg" radius="md" withBorder>
+    <MCard {...props.style} shadow="sm" padding="lg" radius="md" withBorder onClick={props.onClick}>
       <MCard.Section>
         <Image
           src={props.cover_image}
@@ -21,7 +21,7 @@ export default function Card(props: ICard) {
           <Text fw={300} fs="oblique">{props.author}</Text>
         </Group>
         <Badge color="pink">
-          <NumberFormatter prefix="$ " thousandSeparator value={props.price}/>
+          <NumberFormatter prefix="$ " thousandSeparator value={props.price} />
         </Badge>
       </Group>
 
@@ -29,7 +29,7 @@ export default function Card(props: ICard) {
         {props.description}
       </Text>
 
-      <Button color="blue" fullWidth mt="md" radius="md" onClick={props.onClick} rightSection={<IconShoppingCart/>}>
+      <Button color="blue" fullWidth mt="md" radius="md" rightSection={<IconShoppingCart />}>
         Add to cart
       </Button>
     </MCard>

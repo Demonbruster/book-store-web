@@ -6,4 +6,5 @@ export interface IBook {
   genre: string[]
   description: string
   cover_image: string
+  price: number
 }

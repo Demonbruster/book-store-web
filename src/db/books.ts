@@ -1,3 +1,5 @@
+import { generateRandomNumber } from "@/lib/utils";
+
 const books = [
   {
     "id": 1,
@@ -601,4 +603,5 @@ const books = [
   }
 ];
 
-export default books;
+const books_with_price = books.map(bk => ({...bk, price: generateRandomNumber(50,5000)}))
+export default books_with_price;

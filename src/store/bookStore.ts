@@ -18,7 +18,7 @@ export interface IAction {
 }
 
 const initialState: IState = {
-  books: [],
+  books: books,
   you_might_like: generateRandomList(books, 10),
   popular: generateRandomList(books, 6),
   missing_your_collection: generateRandomList(books, 10),

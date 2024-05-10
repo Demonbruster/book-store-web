@@ -11,6 +11,7 @@ export default function SmallCard(props: ICard) {
       p="xs"
       radius="md"
       withBorder
+      onClick={props.onClick}
     >
       <Grid>
         <Grid.Col span={3}>
@@ -37,7 +38,7 @@ export default function SmallCard(props: ICard) {
           </Text>
 
 
-          <Button color="blue" fullWidth mt="md" radius="md" onClick={props.onClick} rightSection={<IconShoppingCart />}>
+          <Button color="blue" fullWidth mt="md" radius="md" rightSection={<IconShoppingCart />}>
             Add to cart
           </Button>
         </Grid.Col>

@@ -6,25 +6,27 @@ import { IBook } from "@/types/Book";
 import { generateRandomNumber } from "@/lib/utils";
 import { useRef } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
+import { useRouter } from "next/navigation";
+
 
 export interface ICarousel {
   data: IBook[]
 }
 
 export default function Carousel({ data }: ICarousel) {
+  const router = useRouter();
   const autoplay = useRef(Autoplay({ delay: 2000 }));
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
 
   const handleClick = (id: number) => {
-    console.log({ id })
+    router.push('book/' + id)
   }
 
   const slides = data.map((item) => (
     <MCarousel.Slide key={item.title}>
       <Card
         {...item}
-        price={generateRandomNumber(50, 5000)}
         onClick={() => {
           handleClick(item.id)
         }} />

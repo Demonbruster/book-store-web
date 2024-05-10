@@ -1,3 +1,5 @@
+import books from "@/db/books";
+import { generateRandomList } from "@/lib/utils";
 import { IBook } from "@/types/Book";
 import { create } from "zustand";
 
@@ -12,21 +14,16 @@ export interface IState {
 
 export interface IAction {
   loadBooks: (books: IBook[]) => void
-  setYouMightLikeBooks: (books: IBook[]) => void
-  setPopularBooks: (books: IBook[]) => void
-  setMissingYourCollection: (books: IBook[]) => void
-  setWeAreLoving: (books: IBook[]) => void
-  setMoreToDiscover: (books: IBook[]) => void
   setRest: () => void
 }
 
 const initialState: IState = {
   books: [],
-  you_might_like: [],
-  popular: [],
-  missing_your_collection: [],
-  we_are_loving: [],
-  more_to_discover: [],
+  you_might_like: generateRandomList(books, 10),
+  popular: generateRandomList(books, 6),
+  missing_your_collection: generateRandomList(books, 10),
+  we_are_loving: generateRandomList(books, 10),
+  more_to_discover: generateRandomList(books, 10),
 }
 
 const useBookStore = create<IState & IAction>((set) => ({
@@ -34,26 +31,6 @@ const useBookStore = create<IState & IAction>((set) => ({
   loadBooks: (books: IBook[]) => set((state)=> ({
     ...state,
     books,
-  })),
-  setYouMightLikeBooks: (books: IBook[]) => set((state)=> ({
-    ...state,
-    you_might_like:books,
-  })),
-  setPopularBooks: (books: IBook[]) => set((state)=> ({
-    ...state,
-    popular: books,
-  })),
-  setMissingYourCollection: (books: IBook[]) => set((state)=> ({
-    ...state,
-    missing_your_collection: books,
-  })),
-  setWeAreLoving: (books: IBook[]) => set((state)=> ({
-    ...state,
-    we_are_loving: books,
-  })),
-  setMoreToDiscover: (books: IBook[]) => set((state)=> ({
-    ...state,
-    more_to_discover: books,
   })),
   setRest: () => set(()=> (initialState)),
 }))

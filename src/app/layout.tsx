@@ -1,8 +1,10 @@
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
 import '@mantine/core/styles.css';
+import '@mantine/carousel/styles.css';
 
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import Layout from '@/components/layout/main/Layout';
 
 export const metadata = {
   title: 'My Mantine app',
@@ -20,7 +22,11 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineProvider>{children}</MantineProvider>
+        <MantineProvider>
+          <Layout>
+            {children}
+          </Layout>
+        </MantineProvider>
       </body>
     </html>
   );

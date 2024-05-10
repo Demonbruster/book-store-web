@@ -3,7 +3,7 @@ const books = [
     "id": 1,
     "title": "To Kill a Mockingbird",
     "author": "Harper Lee",
-    "publication_year": 1960,
+    "publication_year": "1960",
     "genre": [
       "Fiction",
       "Classic"
@@ -15,7 +15,7 @@ const books = [
     "id": 2,
     "title": "1984",
     "author": "George Orwell",
-    "publication_year": 1949,
+    "publication_year": "1949",
     "genre": [
       "Dystopian",
       "Science Fiction"
@@ -27,7 +27,7 @@ const books = [
     "id": 3,
     "title": "Pride and Prejudice",
     "author": "Jane Austen",
-    "publication_year": 1813,
+    "publication_year": "1813",
     "genre": [
       "Classic",
       "Romance"
@@ -39,7 +39,7 @@ const books = [
     "id": 4,
     "title": "The Great Gatsby",
     "author": "F. Scott Fitzgerald",
-    "publication_year": 1925,
+    "publication_year": "1925",
     "genre": [
       "Fiction",
       "Classic"
@@ -51,7 +51,7 @@ const books = [
     "id": 5,
     "title": "Moby-Dick",
     "author": "Herman Melville",
-    "publication_year": 1851,
+    "publication_year": "1851",
     "genre": [
       "Fiction",
       "Adventure"
@@ -63,7 +63,7 @@ const books = [
     "id": 6,
     "title": "The Lord of the Rings",
     "author": "J.R.R. Tolkien",
-    "publication_year": 1954,
+    "publication_year": "1954",
     "genre": [
       "Fantasy",
       "Adventure"
@@ -75,7 +75,7 @@ const books = [
     "id": 7,
     "title": "The Catcher in the Rye",
     "author": "J.D. Salinger",
-    "publication_year": 1951,
+    "publication_year": "1951",
     "genre": [
       "Fiction",
       "Coming-of-age"
@@ -87,7 +87,7 @@ const books = [
     "id": 8,
     "title": "The Hobbit",
     "author": "J.R.R. Tolkien",
-    "publication_year": 1937,
+    "publication_year": "1937",
     "genre": [
       "Fantasy",
       "Adventure"
@@ -99,7 +99,7 @@ const books = [
     "id": 9,
     "title": "One Hundred Years of Solitude",
     "author": "Gabriel Garcia Marquez",
-    "publication_year": 1967,
+    "publication_year": "1967",
     "genre": [
       "Magical Realism",
       "Literary Fiction"
@@ -111,7 +111,7 @@ const books = [
     "id": 10,
     "title": "War and Peace",
     "author": "Leo Tolstoy",
-    "publication_year": 1869,
+    "publication_year": "1869",
     "genre": [
       "Historical Fiction",
       "Epic"
@@ -147,7 +147,7 @@ const books = [
     "id": 13,
     "title": "The Brothers Karamazov",
     "author": "Fyodor Dostoevsky",
-    "publication_year": 1880,
+    "publication_year": "1880",
     "genre": [
       "Classic",
       "Philosophical Fiction"
@@ -159,7 +159,7 @@ const books = [
     "id": 14,
     "title": "Crime and Punishment",
     "author": "Fyodor Dostoevsky",
-    "publication_year": 1866,
+    "publication_year": "1866",
     "genre": [
       "Classic",
       "Psychological Fiction"
@@ -171,7 +171,7 @@ const books = [
     "id": 15,
     "title": "The Picture of Dorian Gray",
     "author": "Oscar Wilde",
-    "publication_year": 1890,
+    "publication_year": "1890",
     "genre": [
       "Gothic",
       "Philosophical Fiction"
@@ -183,7 +183,7 @@ const books = [
     "id": 16,
     "title": "Brave New World",
     "author": "Aldous Huxley",
-    "publication_year": 1932,
+    "publication_year": "1932",
     "genre": [
       "Dystopian",
       "Science Fiction"
@@ -195,7 +195,7 @@ const books = [
     "id": 17,
     "title": "The Count of Monte Cristo",
     "author": "Alexandre Dumas",
-    "publication_year": 1844,
+    "publication_year": "1844",
     "genre": [
       "Adventure",
       "Historical Fiction"
@@ -207,7 +207,7 @@ const books = [
     "id": 18,
     "title": "Anna Karenina",
     "author": "Leo Tolstoy",
-    "publication_year": 1877,
+    "publication_year": "1877",
     "genre": [
       "Classic",
       "Romance"
@@ -219,7 +219,7 @@ const books = [
     "id": 19,
     "title": "The Alchemist",
     "author": "Paulo Coelho",
-    "publication_year": 1988,
+    "publication_year": "1988",
     "genre": [
       "Fiction",
       "Philosophical"
@@ -231,7 +231,7 @@ const books = [
     "id": 20,
     "title": "The Adventures of Huckleberry Finn",
     "author": "Mark Twain",
-    "publication_year": 1884,
+    "publication_year": "1884",
     "genre": [
       "Adventure",
       "Satire"
@@ -255,7 +255,7 @@ const books = [
     "id": 22,
     "title": "The Lord of the Rings",
     "author": "J.R.R. Tolkien",
-    "publication_year": 1954,
+    "publication_year": "1954",
     "genre": [
       "Fantasy",
       "Adventure"
@@ -267,7 +267,7 @@ const books = [
     "id": 23,
     "title": "Don Quixote",
     "author": "Miguel de Cervantes",
-    "publication_year": 1605,
+    "publication_year": "1605",
     "genre": [
       "Classic",
       "Satire"
@@ -279,7 +279,7 @@ const books = [
     "id": 24,
     "title": "Frankenstein",
     "author": "Mary Shelley",
-    "publication_year": 1818,
+    "publication_year": "1818",
     "genre": [
       "Gothic",
       "Science Fiction"
@@ -291,7 +291,7 @@ const books = [
     "id": 25,
     "title": "Alice's Adventures in Wonderland",
     "author": "Lewis Carroll",
-    "publication_year": 1865,
+    "publication_year": "1865",
     "genre": [
       "Fantasy",
       "Children's Literature"
@@ -303,7 +303,7 @@ const books = [
     "id": 26,
     "title": "The Little Prince",
     "author": "Antoine de Saint-Exupéry",
-    "publication_year": 1943,
+    "publication_year": "1943",
     "genre": [
       "Fable",
       "Children's Literature"
@@ -315,7 +315,7 @@ const books = [
     "id": 27,
     "title": "The Book Thief",
     "author": "Markus Zusak",
-    "publication_year": 2005,
+    "publication_year": "2005",
     "genre": [
       "Historical Fiction",
       "War"
@@ -327,7 +327,7 @@ const books = [
     "id": 28,
     "title": "Slaughterhouse-Five",
     "author": "Kurt Vonnegut",
-    "publication_year": 1969,
+    "publication_year": "1969",
     "genre": [
       "Satire",
       "Science Fiction"
@@ -339,7 +339,7 @@ const books = [
     "id": 29,
     "title": "The Grapes of Wrath",
     "author": "John Steinbeck",
-    "publication_year": 1939,
+    "publication_year": "1939",
     "genre": [
       "Historical Fiction",
       "Social Commentary"
@@ -351,7 +351,7 @@ const books = [
     "id": 30,
     "title": "Fahrenheit 451",
     "author": "Ray Bradbury",
-    "publication_year": 1953,
+    "publication_year": "1953",
     "genre": [
       "Dystopian",
       "Science Fiction"
@@ -363,7 +363,7 @@ const books = [
     "id": 31,
     "title": "The Lord of the Flies",
     "author": "William Golding",
-    "publication_year": 1954,
+    "publication_year": "1954",
     "genre": [
       "Dystopian",
       "Psychological Fiction"
@@ -375,7 +375,7 @@ const books = [
     "id": 32,
     "title": "The Hitchhiker's Guide to the Galaxy",
     "author": "Douglas Adams",
-    "publication_year": 1979,
+    "publication_year": "1979",
     "genre": [
       "Science Fiction",
       "Comedy"
@@ -387,7 +387,7 @@ const books = [
     "id": 33,
     "title": "A Tale of Two Cities",
     "author": "Charles Dickens",
-    "publication_year": 1859,
+    "publication_year": "1859",
     "genre": [
       "Historical Fiction",
       "Classic"
@@ -399,7 +399,7 @@ const books = [
     "id": 34,
     "title": "The Chronicles of Narnia",
     "author": "C.S. Lewis",
-    "publication_year": 1950,
+    "publication_year": "1950",
     "genre": [
       "Fantasy",
       "Children's Literature"
@@ -411,7 +411,7 @@ const books = [
     "id": 35,
     "title": "The Handmaid's Tale",
     "author": "Margaret Atwood",
-    "publication_year": 1985,
+    "publication_year": "1985",
     "genre": [
       "Dystopian",
       "Feminist Fiction"
@@ -423,7 +423,7 @@ const books = [
     "id": 36,
     "title": "The Name of the Rose",
     "author": "Umberto Eco",
-    "publication_year": 1980,
+    "publication_year": "1980",
     "genre": [
       "Historical Fiction",
       "Mystery"
@@ -435,7 +435,7 @@ const books = [
     "id": 37,
     "title": "The Trial",
     "author": "Franz Kafka",
-    "publication_year": 1925,
+    "publication_year": "1925",
     "genre": [
       "Absurdist Fiction",
       "Existential"
@@ -447,7 +447,7 @@ const books = [
     "id": 38,
     "title": "The Kite Runner",
     "author": "Khaled Hosseini",
-    "publication_year": 2003,
+    "publication_year": "2003",
     "genre": [
       "Historical Fiction",
       "Drama"
@@ -459,7 +459,7 @@ const books = [
     "id": 39,
     "title": "The Pillars of the Earth",
     "author": "Ken Follett",
-    "publication_year": 1989,
+    "publication_year": "1989",
     "genre": [
       "Historical Fiction",
       "Adventure"
@@ -471,7 +471,7 @@ const books = [
     "id": 40,
     "title": "The Shadow of the Wind",
     "author": "Carlos Ruiz Zafón",
-    "publication_year": 2001,
+    "publication_year": "2001",
     "genre": [
       "Mystery",
       "Gothic"
@@ -483,7 +483,7 @@ const books = [
     "id": 41,
     "title": "The Secret Garden",
     "author": "Frances Hodgson Burnett",
-    "publication_year": 1911,
+    "publication_year": "1911",
     "genre": [
       "Children's Literature",
       "Classic"
@@ -495,7 +495,7 @@ const books = [
     "id": 42,
     "title": "The Giver",
     "author": "Lois Lowry",
-    "publication_year": 1993,
+    "publication_year": "1993",
     "genre": [
       "Dystopian",
       "Young Adult"
@@ -507,7 +507,7 @@ const books = [
     "id": 43,
     "title": "The Metamorphosis",
     "author": "Franz Kafka",
-    "publication_year": 1915,
+    "publication_year": "1915",
     "genre": [
       "Absurdist Fiction",
       "Existential"
@@ -519,7 +519,7 @@ const books = [
     "id": 44,
     "title": "Gone with the Wind",
     "author": "Margaret Mitchell",
-    "publication_year": 1936,
+    "publication_year": "1936",
     "genre": [
       "Historical Fiction",
       "Romance"
@@ -531,7 +531,7 @@ const books = [
     "id": 45,
     "title": "The Wind in the Willows",
     "author": "Kenneth Grahame",
-    "publication_year": 1908,
+    "publication_year": "1908",
     "genre": [
       "Children's Literature",
       "Fantasy"
@@ -543,7 +543,7 @@ const books = [
     "id": 46,
     "title": "Dracula",
     "author": "Bram Stoker",
-    "publication_year": 1897,
+    "publication_year": "1897",
     "genre": [
       "Gothic",
       "Horror"
@@ -555,7 +555,7 @@ const books = [
     "id": 47,
     "title": "The Call of the Wild",
     "author": "Jack London",
-    "publication_year": 1903,
+    "publication_year": "1903",
     "genre": [
       "Adventure",
       "Nature"
@@ -567,7 +567,7 @@ const books = [
     "id": 48,
     "title": "The Stand",
     "author": "Stephen King",
-    "publication_year": 1978,
+    "publication_year": "1978",
     "genre": [
       "Horror",
       "Post-Apocalyptic"
@@ -579,7 +579,7 @@ const books = [
     "id": 49,
     "title": "The Color Purple",
     "author": "Alice Walker",
-    "publication_year": 1982,
+    "publication_year": "1982",
     "genre": [
       "Fiction",
       "Historical"
@@ -591,7 +591,7 @@ const books = [
     "id": 50,
     "title": "The Silmarillion",
     "author": "J.R.R. Tolkien",
-    "publication_year": 1977,
+    "publication_year": "1977",
     "genre": [
       "Fantasy",
       "Mythopoeia"

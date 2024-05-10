@@ -2,7 +2,7 @@ import { IBook } from "@/types/Book";
 import { Badge, Button, Card, Grid, Group, Image, MantineStyleProps, NumberFormatter, Text } from "@mantine/core";
 import { IconShoppingCart } from "@tabler/icons-react";
 
-export type ICard = Omit<IBook, 'Id'> & { price: number, onClick: () => void } & { style?: MantineStyleProps }
+export type ICard = Omit<IBook, 'Id'> & { price: number, onClick: () => void, btnClick: () => void } & { style?: MantineStyleProps }
 
 export default function SmallCard(props: ICard) {
   return (
@@ -11,10 +11,10 @@ export default function SmallCard(props: ICard) {
       p="xs"
       radius="md"
       withBorder
-      onClick={props.onClick}
+
     >
       <Grid>
-        <Grid.Col span={3}>
+        <Grid.Col span={3} onClick={props.onClick}>
           <Image
             src={props.cover_image}
             height={160}
@@ -38,7 +38,7 @@ export default function SmallCard(props: ICard) {
           </Text>
 
 
-          <Button color="blue" fullWidth mt="md" radius="md" rightSection={<IconShoppingCart />}>
+          <Button color="blue" fullWidth mt="md" radius="md" onClick={props.btnClick} rightSection={<IconShoppingCart />}>
             Add to cart
           </Button>
         </Grid.Col>

@@ -2,12 +2,12 @@ import { IBook } from '@/types/Book';
 import { Card as MCard, Image, Text, Badge, Button, Group, NumberFormatter, MantineStyleProps } from '@mantine/core';
 import { IconShoppingCart } from '@tabler/icons-react';
 
-export type ICard = Omit<IBook, 'Id'> & { price: number, onClick: () => void } & { style?: MantineStyleProps }
+export type ICard = Omit<IBook, 'Id'> & { price: number, onClick: () => void, btnClick: () => void } & { style?: MantineStyleProps }
 
 export default function Card(props: ICard) {
   return (
-    <MCard {...props.style} shadow="sm" padding="lg" radius="md" withBorder onClick={props.onClick}>
-      <MCard.Section>
+    <MCard {...props.style} shadow="sm" padding="lg" radius="md" withBorder >
+      <MCard.Section onClick={props.onClick}>
         <Image
           src={props.cover_image}
           height={160}
@@ -29,7 +29,7 @@ export default function Card(props: ICard) {
         {props.description}
       </Text>
 
-      <Button color="blue" fullWidth mt="md" radius="md" rightSection={<IconShoppingCart />}>
+      <Button color="blue" fullWidth mt="md" radius="md" onClick={props.btnClick} rightSection={<IconShoppingCart />}>
         Add to cart
       </Button>
     </MCard>

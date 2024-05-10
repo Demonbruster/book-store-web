@@ -1,7 +1,7 @@
 "use client"
 
-import { generateRandomNumber } from "@/lib/utils";
 import useBookStore from "@/store/bookStore";
+import useCartStore from "@/store/cartStore";
 import { Badge, Button, Grid, Group, Image, NumberFormatter, Text } from "@mantine/core";
 import { IconArrowLeft, IconShoppingCart } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
@@ -10,6 +10,7 @@ import { useMemo } from "react";
 export default function BookDetails({ id }: { id: number }) {
   const router = useRouter()
   const books = useBookStore(state => state.books)
+  const { addToCart } = useCartStore();
 
   const book = useMemo(() => books.find(bk => bk.id === id)
     , [books, id])
@@ -18,7 +19,9 @@ export default function BookDetails({ id }: { id: number }) {
     There are no book in the Id
   </>
 
-  const handleClick = () => { }
+  const handleClick = () => {
+    addToCart(book)
+   }
   return (
     <>
       <Button mb="xs" radius="md" leftSection={<IconArrowLeft />} onClick={() => router.back()}>

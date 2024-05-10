@@ -7,10 +7,12 @@ import { ActionIcon, Badge, Button, Flex, NumberFormatter, Tooltip } from "@mant
 import { IconArrowLeft, IconEye, IconShoppingCart } from "@tabler/icons-react";
 import useBookStore from "@/store/bookStore";
 import { useRouter } from "next/navigation";
+import useCartStore from "@/store/cartStore";
 
 export default function SearchBooks() {
   const router = useRouter();
   const books = useBookStore((state) => state.books)
+  const { addToCart } = useCartStore();
 
   const columns = useMemo<MRT_ColumnDef<IBook>[]>(() => [
     {
@@ -49,14 +51,14 @@ export default function SearchBooks() {
         <Flex gap="md">
           <Tooltip label="View">
             <ActionIcon color="gray" onClick={() => {
-              router.push("/book/"+row.original.id)
+              router.push("/book/" + row.original.id)
             }}>
               <IconEye />
             </ActionIcon>
           </Tooltip>
           <Tooltip label="Add to cart">
             <ActionIcon onClick={() => {
-
+              addToCart(row.original)
             }}>
               <IconShoppingCart />
             </ActionIcon>
@@ -75,7 +77,7 @@ export default function SearchBooks() {
 
   return (
     <>
-      <Button mb="xs" radius="md" leftSection={<IconArrowLeft />} onClick={()=> router.back()}>
+      <Button mb="xs" radius="md" leftSection={<IconArrowLeft />} onClick={() => router.back()}>
         Back
       </Button>
       <MantineReactTable table={table} />

@@ -3,10 +3,10 @@ import { useMediaQuery } from "@mantine/hooks";
 import { Carousel as MCarousel } from '@mantine/carousel';
 import Card from "./Card";
 import { IBook } from "@/types/Book";
-import { generateRandomNumber } from "@/lib/utils";
 import { useRef } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import { useRouter } from "next/navigation";
+import useCartStore from "@/store/cartStore";
 
 
 export interface ICarousel {
@@ -18,18 +18,21 @@ export default function Carousel({ data }: ICarousel) {
   const autoplay = useRef(Autoplay({ delay: 2000 }));
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
+  const { addToCart } = useCartStore();
 
   const handleClick = (id: number) => {
     router.push('book/' + id)
   }
 
-  const slides = data.map((item) => (
-    <MCarousel.Slide key={item.title}>
+  const slides = data.map((book) => (
+    <MCarousel.Slide key={book.title}>
       <Card
-        {...item}
+        {...book}
         onClick={() => {
-          handleClick(item.id)
-        }} />
+          handleClick(book.id)
+        }} 
+        btnClick={()=> addToCart(book)}
+        />
     </MCarousel.Slide>
   ));
 

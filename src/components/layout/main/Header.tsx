@@ -1,5 +1,6 @@
 import SearchBar from "@/components/common/SearchBar";
-import { Avatar, Box, Flex, Grid } from "@mantine/core";
+import useCartStore from "@/store/cartStore";
+import { Avatar, Box, Flex, Grid, Indicator } from "@mantine/core";
 import { IconSearch, IconShoppingCart } from "@tabler/icons-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
@@ -11,9 +12,17 @@ const Header = () => {
   const router = useRouter()
 
   const isSearch = useMemo(() => pathname === search_path, [pathname])
+  const cartBooks = useCartStore(select => select.cart)
+
+  // @ts-ignore
+  const qty = useMemo(() => cartBooks.reduce((prev, cur) => (prev || 0) + cur.qty, 0), [cartBooks]);
+
+console.log({
+  cartBooks
+})
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleRoute = useCallback((path: string)=> router.push(path),[])
+  const handleRoute = useCallback((path: string) => router.push(path), [])
 
   return (
     <Grid align="center" mt="xs">
@@ -33,7 +42,9 @@ const Header = () => {
           <Box hiddenFrom="xs" mt="xs">
             <IconSearch onClick={() => handleRoute(search_path)} />
           </Box>
-          <IconShoppingCart color="gray" />
+          <Indicator label={qty}  disabled={qty === 0}>
+            <IconShoppingCart color="gray" />
+          </Indicator>
           <Avatar radius="xl" />
         </Flex>
       </Grid.Col>

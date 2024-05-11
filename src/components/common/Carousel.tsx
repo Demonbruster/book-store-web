@@ -1,13 +1,14 @@
 import { useMantineTheme } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { Carousel as MCarousel } from '@mantine/carousel';
-import Card from "./Card";
 import { IBook } from "@/types/Book";
 import { useRef } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import { useRouter } from "next/navigation";
 import useCartStore from "@/store/cartStore";
+import dynamic from "next/dynamic";
 
+const DynamicCard = dynamic(() => import('./Card'), { ssr: false })
 
 export interface ICarousel {
   data: IBook[]
@@ -26,13 +27,13 @@ export default function Carousel({ data }: ICarousel) {
 
   const slides = data.map((book) => (
     <MCarousel.Slide key={book.title}>
-      <Card
+      <DynamicCard
         {...book}
         onClick={() => {
           handleClick(book.id)
-        }} 
-        btnClick={()=> addToCart(book)}
-        />
+        }}
+        btnClick={() => addToCart(book)}
+      />
     </MCarousel.Slide>
   ));
 

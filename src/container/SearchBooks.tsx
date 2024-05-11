@@ -66,6 +66,7 @@ export default function SearchBooks() {
         </Flex>
       )
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   ], [])
 
   const table = useMantineReactTable({

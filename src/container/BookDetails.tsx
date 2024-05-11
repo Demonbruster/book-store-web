@@ -31,8 +31,6 @@ export default function BookDetails({ id }: { id: number }) {
         <Grid.Col span={{ lg: 6, sm: 12 }}>
           <Image
             src={book.cover_image}
-            // height={160}
-            // w={200}
             alt={book.title}
           />
         </Grid.Col>
@@ -42,14 +40,12 @@ export default function BookDetails({ id }: { id: number }) {
               <Text fw={500}>{book.title}</Text>
               <Text fw={300} fs="oblique">{book.author}</Text>
             </Group>
-            {/* <Group> */}
             <Badge color="pink">
               <NumberFormatter prefix="$ " thousandSeparator value={book.price} />
             </Badge>
             <Button color="blue" fullWidth mt="md" radius="md" onClick={handleClick} rightSection={<IconShoppingCart />}>
               Add to cart
             </Button>
-            {/* </Group> */}
           </Group>
 
           <Group justify="left" mt="md" mb="xs">

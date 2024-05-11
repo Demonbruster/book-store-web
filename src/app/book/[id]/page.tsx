@@ -1,4 +1,6 @@
-import BookDetails from "@/container/BookDetails"
+import dynamic from "next/dynamic"
+
+const BookDetails = dynamic(() => import("@/container/BookDetails"), {ssr: false})
 
 type Props = {
   params: {

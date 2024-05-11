@@ -17,10 +17,6 @@ const Header = () => {
   // @ts-ignore
   const qty = useMemo(() => cartBooks.reduce((prev, cur) => (prev || 0) + cur.qty, 0), [cartBooks]);
 
-console.log({
-  cartBooks
-})
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleRoute = useCallback((path: string) => router.push(path), [])
 
@@ -43,7 +39,7 @@ console.log({
             <IconSearch onClick={() => handleRoute(search_path)} />
           </Box>
           <Indicator label={qty}  disabled={qty === 0}>
-            <IconShoppingCart color="gray" />
+            <IconShoppingCart color="gray" onClick={()=> handleRoute('/cart')} />
           </Indicator>
           <Avatar radius="xl" />
         </Flex>

@@ -52,22 +52,25 @@ const useCartStore = create<IState & IAction>(set => ({
       : [...state.cart, { book, qty: 1, total: book.price }],
     subtotal: state.subtotal + book.price
   })),
-  removeFromCart: (book: IBook) => set(state => ({
+  removeFromCart: (book: IBook) => set(state => {
+    const existingBook = state.cart.find(bk => bk.book.id === book.id);
+    return {
     ...state,
     cart: state.cart.filter(bk => bk.book.id !== book.id),
-    subtotal: state.subtotal - book.price
-  })),
-  changeQty: (book: IBook, qty: number, isIncrease: boolean) => set(state => {
+    subtotal: state.subtotal - (book.price * (existingBook ? existingBook.qty : 1))
+  }
+  }),
+  changeQty: (book: IBook, qty: number) => set(state => {
     const existingBook = state.cart.find(bk => bk.book.id === book.id);
     if (!existingBook) {
       return state;
     }
 
-    let newQty = isIncrease ? existingBook.qty + qty : existingBook.qty - qty;
+    let newQty = qty
     newQty = Math.max(0, newQty); 
 
     const updatedCart = state.cart.map(bk =>
-      bk.book.id === book.id ? { ...bk, qty: newQty } : bk
+      bk.book.id === book.id ? { ...bk, qty: newQty, total: newQty * bk.book.price } : bk
     );
 
     return {

@@ -31,6 +31,7 @@ const initialBilling: IBillingDetails = {
   country: '',
   email: '',
   phone: '',
+  streetAddress:'',
   postalCode: '',
 }
 

@@ -38,7 +38,7 @@ const Header = () => {
           <Box hiddenFrom="xs" mt="xs">
             <IconSearch onClick={() => handleRoute(search_path)} />
           </Box>
-          <Indicator label={qty}  disabled={qty === 0}>
+          <Indicator label={qty}  disabled={qty === 0} mt="xs">
             <IconShoppingCart color="gray" onClick={()=> handleRoute('/cart')} />
           </Indicator>
           <Avatar radius="xl" />

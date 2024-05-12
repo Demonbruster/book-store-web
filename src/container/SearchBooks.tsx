@@ -37,7 +37,7 @@ export default function SearchBooks() {
     {
       accessorKey: 'price',
       header: 'Price',
-      Cell: ({ cell }) => (<NumberFormatter prefix="$ " thousandSeparator value={cell.getValue<number>()} />)
+      Cell: ({ cell }) => (<NumberFormatter prefix="$ " thousandSeparator value={cell.getValue<number>()} suppressHydrationWarning />)
     },
     {
       accessorKey: 'id',

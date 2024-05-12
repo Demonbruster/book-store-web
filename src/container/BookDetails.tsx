@@ -41,7 +41,7 @@ export default function BookDetails({ id }: { id: number }) {
               <Text fw={300} fs="oblique">{book.author}</Text>
             </Group>
             <Badge color="pink">
-              <NumberFormatter prefix="$ " thousandSeparator value={book.price} />
+              <NumberFormatter prefix="$ " thousandSeparator value={book.price} suppressHydrationWarning />
             </Badge>
             <Button color="blue" fullWidth mt="md" radius="md" onClick={handleClick} rightSection={<IconShoppingCart />}>
               Add to cart

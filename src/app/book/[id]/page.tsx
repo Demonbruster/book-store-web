@@ -1,6 +1,4 @@
-import dynamic from "next/dynamic"
-
-const BookDetails = dynamic(() => import("@/container/BookDetails"), {ssr: false})
+import BookDetails from "@/container/BookDetails"
 
 type Props = {
   params: {
@@ -17,8 +15,6 @@ export default function page({ params }: Props) {
     return <>Id should be number</>
 
   return (
-    <>
       <BookDetails id={id_as_number} />
-    </>
   )
 }

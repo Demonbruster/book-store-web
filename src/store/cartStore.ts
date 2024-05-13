@@ -1,14 +1,12 @@
 import { IBook } from "@/types/Book";
-import { IBillingDetails, IShippingDetails, PaymentMethod } from "@/types/Customer";
+import { IShippingDetails } from "@/types/Customer";
 import { create } from "zustand";
 
 export interface IState {
   cart: { book: IBook, qty: number, total: number }[]
   subtotal: number
   discount: number
-  billing_details: IBillingDetails
   shipping_details: IShippingDetails
-  payment_method?: PaymentMethod
   paid: boolean
 }
 
@@ -18,15 +16,12 @@ export interface IAction {
   changeQty: (book: IBook, qty: number, isIncrease: boolean) => void
   clearCart: () => void
   addDiscount: (discount: number) => void
-  addBillingDetails: (details: IBillingDetails) => void
   addShippingDetails: (details: IShippingDetails) => void
-  addPaymentMethod: (method: PaymentMethod) => void
   pay: () => void
 }
 
-const initialBilling: IBillingDetails = {
+const initialBilling: IShippingDetails = {
   firstName: '',
-  address: '',
   city: '',
   country: '',
   email: '',
@@ -39,7 +34,6 @@ const initialState: IState = {
   cart: [],
   subtotal: 0,
   discount: 0,
-  billing_details: initialBilling,
   shipping_details: initialBilling,
   paid: false
 }
@@ -90,17 +84,9 @@ const useCartStore = create<IState & IAction>(set => ({
     ...state,
     discount: dis
   })),
-  addBillingDetails: (details: IBillingDetails) => set(state => ({
-    ...state,
-    billing_details: details
-  })),
   addShippingDetails: (details: IShippingDetails) => set(state => ({
     ...state,
     shipping_details: details
-  })),
-  addPaymentMethod: (method: PaymentMethod) => set(state => ({
-    ...state,
-    payment_method: method
   })),
   pay: () => set(state => ({
     ...state,

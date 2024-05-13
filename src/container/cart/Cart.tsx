@@ -4,8 +4,10 @@ import React, { useMemo } from 'react'
 import useCartStore from "@/store/cartStore";
 import { ActionIcon, Button, Divider, Grid, NumberFormatter, NumberInput, Text } from "@mantine/core";
 import { IconTrash } from '@tabler/icons-react';
+import { useRouter } from 'next/navigation';
 
 export default function Cart() {
+  const router = useRouter()
   const { cart, discount, subtotal, changeQty, addDiscount, removeFromCart } = useCartStore();
 
   const total = useMemo(() => subtotal - discount, [subtotal, discount])
@@ -61,7 +63,7 @@ export default function Cart() {
 
 
         <Grid.Col span={12}>
-          <Button fullWidth disabled={cart.length === 0} variant='filled' radius="md">
+          <Button fullWidth disabled={cart.length === 0} variant='filled' radius="md" onClick={()=> router.push('/cart/checkout')}>
             Check out
           </Button>
         </Grid.Col>

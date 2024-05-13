@@ -1,20 +1,21 @@
 "use client"
 
 import React, { useState } from 'react';
-import { Stepper, Button, Group } from '@mantine/core';
+import { Stepper, Button, Group, Title } from '@mantine/core';
 import { CheckoutFormProvider, IFormValues, useCheckoutForm } from './checkout-form.context';
-import { IBillingDetails, PaymentMethod } from '@/types/Customer';
+import { IShippingDetails } from '@/types/Customer';
 import Address from './Address';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import { z } from 'zod';
-import { phoneRegExp } from '@/lib/utils';
+import { phoneRegEx, postalCodeRegEx, } from '@/lib/utils';
 import useCartStore from '@/store/cartStore';
 import Payment from './Payment';
+import Confirmation from './Confirmation';
+import { useRouter } from 'next/navigation';
 
 
-const initialBilling: IBillingDetails = {
+const initialBilling: IShippingDetails = {
   firstName: '',
-  address: '',
   city: '',
   country: '',
   email: '',
@@ -24,76 +25,80 @@ const initialBilling: IBillingDetails = {
 }
 
 const schema = z.object({
-  billing_details: z.object({
-    firstName:  z.string(),
-    address: z.string(),
-    city: z.string(),
-    country: z.string(),
-    email: z.string().email(),
-    phone: z.string().regex(phoneRegExp, {
-      message: 'Invalid phone number format. Please provide a valid phone number.',
-    }),
-    streetAddress: z.string(),
-    postalCode: z.string()
-  }),
   shipping_details: z.object({
-    firstName:  z.string(),
-    address: z.string(),
-    city: z.string(),
-    country: z.string(),
+    firstName: z.string().min(2),
+    city: z.string().min(2),
+    country: z.string().min(2),
     email: z.string().email(),
-    phone: z.string().regex(phoneRegExp, {
+    phone: z.string().regex(phoneRegEx, {
       message: 'Invalid phone number format. Please provide a valid phone number.',
     }),
-    streetAddress: z.string(),
-    postalCode: z.string()
+    streetAddress: z.string().min(2),
+    postalCode: z.string().regex(postalCodeRegEx, {
+      message: 'Invalid postal code format, ex: 0000'
+    })
   }),
 })
 
 export default function Checkout() {
-  const { subtotal, discount } = useCartStore();
-
-
+  const router = useRouter();
+  const { subtotal, discount, addShippingDetails } = useCartStore();
 
   const form = useCheckoutForm({
     mode: 'uncontrolled',
     initialValues: {
-      billing_details: initialBilling,
       shipping_details: initialBilling,
       paid: false,
       shipping_details_as_same_as_billing_details: true,
-      payment_method: undefined,
-    }, 
-    validate: zodResolver(schema)
+    },
+    validate: zodResolver(schema),
   });
 
-  const [active, setActive] = useState(1);
-  const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
+  const handleFormSubmit = (values: unknown) => {
+    const castedValues = values as IFormValues
+    addShippingDetails(castedValues.shipping_details)
+  }
+
+  const [active, setActive] = useState(0);
+  const nextStep = () => {
+
+    if (active === 0) {
+      form.onSubmit(handleFormSubmit)
+    }
+
+    if (form.isValid())
+      setActive((current) => (current < 3 ? current + 1 : current))
+  };
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
 
   return (
     <CheckoutFormProvider form={form}>
-      <React.Fragment>
+      <form onSubmit={form.onSubmit(handleFormSubmit)}>
         <Stepper active={active} onStepClick={setActive}>
           <Stepper.Step label="Details" description="Billing & Shipping details">
             <Address />
           </Stepper.Step>
           <Stepper.Step label="Payment" description={`Make payment $ ${subtotal - discount} `}>
-            <Payment/>
+            <Payment />
           </Stepper.Step>
           <Stepper.Step label="Confirmation" description="List of orders">
-            Step 3 content: Get full access
+            <Confirmation />
           </Stepper.Step>
           <Stepper.Completed>
-            Completed, click back button to get to previous step
+            <>
+              <Title>
+                Thank you for purchasing!!!
+              </Title>
+              <Button mt="md" onClick={() => router.push('/')}>More shopping</Button>
+            </>
           </Stepper.Completed>
         </Stepper>
 
         <Group justify="center" mt="xl">
           <Button variant="default" onClick={prevStep}>Back</Button>
-          <Button onClick={nextStep}>Next step</Button>
+          <Button type='submit' onClick={nextStep}>Next step</Button>
         </Group>
-      </React.Fragment>
+      </form>
     </CheckoutFormProvider>
   );
 }

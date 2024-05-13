@@ -1,41 +1,51 @@
+import { useCallback, useRef } from 'react';
+import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import { useMantineTheme } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { Carousel as MCarousel } from '@mantine/carousel';
-import { IBook } from "@/types/Book";
-import { useRef } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
-import { useRouter } from "next/navigation";
+import { IBook } from "@/types/Book";
 import useCartStore from "@/store/cartStore";
-import dynamic from "next/dynamic";
 
-const DynamicCard = dynamic(() => import('./Card'), { ssr: false })
+const DynamicCard = dynamic(() => import('./Card'), { ssr: false });
 
-export interface ICarousel {
-  data: IBook[]
+export interface ICarouselProps {
+  data: IBook[];
 }
 
-export default function Carousel({ data }: ICarousel) {
+export default function Carousel({ data }: ICarouselProps) {
   const router = useRouter();
-  const autoplay = useRef(Autoplay({ delay: 2000 }));
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
+  const autoplay = useRef(Autoplay({ delay: 2000 }));
   const { addToCart } = useCartStore();
 
-  const handleClick = (id: number) => {
-    router.push('book/' + id)
-  }
+  const handleClick = useCallback((id: number) => {
+    router.push(`/book/${id}`);
+  }, [router]);
+
+  const handleAddToCart = useCallback((book: IBook) => {
+    addToCart(book);
+  }, [addToCart]);
 
   const slides = data.map((book) => (
     <MCarousel.Slide key={book.title}>
       <DynamicCard
         {...book}
-        onClick={() => {
-          handleClick(book.id)
-        }}
-        btnClick={() => addToCart(book)}
+        onClick={() => handleClick(book.id)}
+        btnClick={() => handleAddToCart(book)}
       />
     </MCarousel.Slide>
   ));
+
+  const handleMouseEnter = () => {
+    autoplay.current.stop();
+  };
+
+  const handleMouseLeave = () => {
+    autoplay.current.reset();
+  };
 
   return (
     <MCarousel
@@ -45,8 +55,8 @@ export default function Carousel({ data }: ICarousel) {
       withIndicators
       slidesToScroll={mobile ? 1 : 2}
       plugins={[autoplay.current]}
-      onMouseEnter={autoplay.current.stop}
-      onMouseLeave={autoplay.current.reset}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {slides}
     </MCarousel>

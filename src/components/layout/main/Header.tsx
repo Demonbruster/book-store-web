@@ -5,20 +5,18 @@ import { IconSearch, IconShoppingCart } from "@tabler/icons-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 
-const search_path = "/book/search"
+const searchPath = "/book/search";
 
 const Header = () => {
-  const pathname = usePathname()
-  const router = useRouter()
+  const pathname = usePathname();
+  const router = useRouter();
 
-  const isSearch = useMemo(() => pathname === search_path, [pathname])
-  const cartBooks = useCartStore(select => select.cart)
+  const isSearch = useMemo(() => pathname === searchPath, [pathname]);
+  const cartBooks = useCartStore((select) => select.cart);
 
-  // @ts-ignore
-  const qty = useMemo(() => cartBooks.reduce((prev, cur) => (prev || 0) + cur.qty, 0), [cartBooks]);
+  const qty = useMemo(() => cartBooks.reduce((prev, cur) => prev + cur.qty, 0), [cartBooks]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleRoute = useCallback((path: string) => router.push(path), [])
+  const handleRoute = useCallback((path: string) => router.push(path), [router]);
 
   return (
     <Grid align="center" mt="xs">
@@ -26,20 +24,23 @@ const Header = () => {
         Logo
       </Grid.Col>
       <Grid.Col span="auto">
-        {!isSearch && <SearchBar visibleFrom="xs"
-          placeholder="Search books.."
-          radius="md"
-          size="md"
-          onClick={() => handleRoute(search_path)}
-        />}
+        {!isSearch && (
+          <SearchBar
+            visibleFrom="xs"
+            placeholder="Search books.."
+            radius="md"
+            size="md"
+            onClick={() => handleRoute(searchPath)}
+          />
+        )}
       </Grid.Col>
       <Grid.Col span="content">
         <Flex gap="lg" align="center" px="xl">
-          <Box hiddenFrom="xs" mt="xs">
-            <IconSearch onClick={() => handleRoute(search_path)} />
+          <Box hiddenFrom="xs" mt="xs" onClick={() => handleRoute(searchPath)}>
+            <IconSearch />
           </Box>
-          <Indicator label={qty}  disabled={qty === 0} mt="xs">
-            <IconShoppingCart color="gray" onClick={()=> handleRoute('/cart')} />
+          <Indicator label={qty} disabled={qty === 0} mt="xs" onClick={() => handleRoute('/cart')}>
+            <IconShoppingCart color="gray" />
           </Indicator>
           <Avatar radius="xl" />
         </Flex>

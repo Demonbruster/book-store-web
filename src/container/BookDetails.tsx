@@ -1,69 +1,88 @@
 "use client"
 
+import { useMemo } from "react";
+import { useRouter } from "next/navigation";
 import useBookStore from "@/store/bookStore";
 import useCartStore from "@/store/cartStore";
-import { Badge, Button, Grid, Group, Image, NumberFormatter, Text } from "@mantine/core";
+import { Badge, Button, Grid, Group, Image, NumberFormatter, Text, Paper, Divider } from "@mantine/core";
 import { IconArrowLeft, IconShoppingCart } from "@tabler/icons-react";
-import { useRouter } from "next/navigation";
-import { useMemo } from "react";
 
 export default function BookDetails({ id }: { id: number }) {
-  const router = useRouter()
-  const books = useBookStore(state => state.books)
+  const router = useRouter();
+  const books = useBookStore(state => state.books);
   const { addToCart } = useCartStore();
 
-  const book = useMemo(() => books.find(bk => bk.id === id)
-    , [books, id])
+  const book = useMemo(() => books.find(bk => bk.id === id), [books, id]);
 
-  if (typeof book === 'undefined') return <>
-    There are no book in the Id
-  </>
+  if (!book) {
+    return (
+      <Text size="xl" mt="xl">
+        Book not found!
+      </Text>
+    );
+  }
 
   const handleClick = () => {
-    addToCart(book)
-   }
+    addToCart(book);
+    router.push('/cart');
+  };
+
   return (
     <>
-      <Button mb="xs" radius="md" leftSection={<IconArrowLeft />} onClick={() => router.back()}>
+      <Button
+        mb="md"
+        variant="light"
+        color="blue"
+        radius="md"
+        leftSection={<IconArrowLeft />}
+        onClick={() => router.back()}
+      >
         Back
       </Button>
+
       <Grid>
-        <Grid.Col span={{ lg: 6, sm: 12 }}>
-          <Image
-            src={book.cover_image}
-            alt={book.title}
-          />
+        <Grid.Col>
+          <Image src={book.cover_image} alt={book.title} height={400} />
         </Grid.Col>
-        <Grid.Col span={{ lg: 6, sm: 12 }}>
-          <Group justify="space-between" mt="md" mb="xs">
-            <Group>
-              <Text fw={500}>{book.title}</Text>
-              <Text fw={300} fs="oblique">{book.author}</Text>
-            </Group>
-            <Badge color="pink">
-              <NumberFormatter prefix="$ " thousandSeparator value={book.price} suppressHydrationWarning />
+        <Grid.Col>
+          <Paper p="lg" shadow="sm">
+            <Text size="xl" fw={600} mb="sm">
+              {book.title}
+            </Text>
+            <Text size="sm" color="dimmed" mb="sm">
+              {book.author}
+            </Text>
+            <Badge color="pink" variant="filled">
+              <NumberFormatter prefix="$ " thousandSeparator value={book.price} />
             </Badge>
-            <Button color="blue" fullWidth mt="md" radius="md" onClick={handleClick} rightSection={<IconShoppingCart />}>
+            <Divider m="md" />
+            <Text size="sm" color="dimmed">
+              {book.description}
+            </Text>
+            <Divider m="md" />
+            <Group gap="sm">
+              {book.genre.map((genre, index) => (
+                <Badge key={index} color="gray">
+                  <Text size="sm" color="white">
+                    {genre}
+                  </Text>
+                </Badge>
+              ))}
+            </Group>
+            <Button
+              fullWidth
+              variant="filled"
+              color="blue"
+              radius="md"
+              mt="lg"
+              onClick={handleClick}
+              rightSection={<IconShoppingCart />}
+            >
               Add to cart
             </Button>
-          </Group>
-
-          <Group justify="left" mt="md" mb="xs">
-            {book.genre.map((genre, index) => (
-              <Badge key={`genre-${index}`} color="gray">
-                <Text c="white">
-                  {genre}
-                </Text>
-              </Badge>
-            ))}
-          </Group>
-
-          <Text size="sm" c="dimmed" mt="sm">
-            {book.description}
-          </Text>
-
+          </Paper>
         </Grid.Col>
       </Grid>
     </>
-  )
+  );
 }

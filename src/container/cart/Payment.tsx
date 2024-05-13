@@ -1,5 +1,4 @@
-import { Box, Flex, Grid, Group, InputBase, Radio, TextInput } from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { Box, Flex, InputBase, TextInput, Paper } from "@mantine/core";
 import { IMaskInput } from "react-imask";
 import { ChangeEventHandler, useState } from "react";
 import Card, { Focused } from 'react-credit-cards-2';
@@ -12,13 +11,6 @@ interface ICard {
   number: string,
 }
 
-const customMask = function (value:string) {
-  var pattern = new RegExp(/^(0[1-9]|1[0-2])(\/|-)([0-9]{2})+$/i);
-
-  console.log(value, pattern.test(value), typeof value);
-  return pattern.test(value);
-};
-
 export default function Payment() {
   const [card, setCard] = useState({
     cvc: '',
@@ -30,7 +22,6 @@ export default function Payment() {
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt) => {
     const { name, value } = evt.target;
-
     setCard((prev) => ({ ...prev, [name]: value }));
   }
 
@@ -40,19 +31,20 @@ export default function Payment() {
   }
 
   return (
-    <Flex justify="center" >
-      <Box w={300} pr="md" visibleFrom="md">
-        <Card
-          cvc={card.cvc}
-          expiry={card.expiry}
-          focused={card.focus}
-          name={card.name}
-          number={card.number}
-        />
+    <Flex justify="center">
+      <Box pr={{ xs: 'md', md: 0 }} mb="md">
+        <Paper px="md" style={{ maxWidth: 350 }}>
+          <Card
+            cvc={card.cvc}
+            expiry={card.expiry}
+            focused={card.focus}
+            name={card.name}
+            number={card.number}
+          />
+        </Paper>
       </Box>
 
       <Box>
-
         <InputBase
           component={IMaskInput}
           mb="xs"
@@ -77,17 +69,16 @@ export default function Payment() {
           onFocus={handleInputFocus}
         />
 
-        <Flex justify="flex-start">
+        <Flex align="center">
           <InputBase
             component={IMaskInput}
             mb="xs"
             mr="xs"
-            w={200}
+            w={120}
             name="expiry"
             withAsterisk
             placeholder="MM / YY"
-            // mask={customMask}
-            mask="00/00"
+            mask="00 / 00"
             value={card.expiry}
             onChange={handleInputChange}
             onFocus={handleInputFocus}
@@ -95,12 +86,12 @@ export default function Payment() {
 
           <InputBase
             component={IMaskInput}
-            mask="000"
             mb="xs"
             w={90}
             name="cvc"
             withAsterisk
             placeholder="CVC"
+            mask="000"
             value={card.cvc}
             onChange={handleInputChange}
             onFocus={handleInputFocus}

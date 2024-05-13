@@ -13,23 +13,8 @@ EXPOSE 3000
 
 CMD ["yarn","dev"]
 
-# # Builder Stage
-# FROM node:18-alpine AS builder
-
-# WORKDIR /app
-
-# COPY package*.json ./
-
-# RUN yarn install
-
-# COPY . .
-
-# RUN yarn build
-
-# Production Stage 
-
 # Builder Stage
-FROM node:18-alpine AS production
+FROM node:18-alpine AS builder
 
 WORKDIR /app
 
@@ -41,19 +26,19 @@ COPY . .
 
 RUN yarn build
 
-RUN yarn start -p 4000
+# Production Stage 
 
-# FROM node:18-alpine AS production
+FROM node:18-alpine AS production
 
-# WORKDIR /app
+WORKDIR /app
 
-# # Copy the built artifacts from the builder stage
-# COPY --from=builder /app/.next/standalone ./
-# COPY --from=builder /app/.next/static ./.next/static
+# Copy the built artifacts from the builder stage
+COPY --from=builder /app/.next/server/app ./
+COPY --from=builder /app/.next/static ./.next/static
 
-# # Set the environment variables (if needed)
-# ENV NODE_ENV=production
+# Set the environment variables (if needed)
+ENV NODE_ENV=production
 
-# EXPOSE 4000
+EXPOSE 4000
 
-# CMD ["node", "server.js"]
+CMD ["node", "index.html"]

@@ -6,8 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docker:build:dev": "docker build -target development -t book-store-web .",
+    "docker:build:prod": "docker build -target production -t book-store-web .",
+    "docker:up:dev": "docker-compose up development",
+    "docker:up:prod": "docker-compose up production"
   },
+
   "dependencies": {
     "@mantine/carousel": "^7.9.1",
     "@mantine/core": "^7.9.1",

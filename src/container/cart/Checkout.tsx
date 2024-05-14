@@ -2,16 +2,16 @@
 
 import React, { useState } from 'react';
 import { Stepper, Button, Group, Title, Paper } from '@mantine/core';
-import { CheckoutFormProvider, IFormValues, useCheckoutForm } from './checkout-form.context';
+import { CheckoutFormProvider, IFormValues, card_schema, shipping_schema, useCheckoutForm } from './checkout-form.context';
 import { IShippingDetails } from '@/types/Customer';
 import Address from './Address';
 import { zodResolver } from 'mantine-form-zod-resolver';
-import { z } from 'zod';
-import { phoneRegEx, postalCodeRegEx } from '@/lib/utils';
+
 import useCartStore from '@/store/cartStore';
 import Payment from './Payment';
 import Confirmation from './Confirmation';
 import { useRouter } from 'next/navigation';
+import { useMediaQuery } from '@mantine/hooks';
 
 const initialBilling: IShippingDetails = {
   firstName: '',
@@ -23,25 +23,13 @@ const initialBilling: IShippingDetails = {
   postalCode: '',
 };
 
-const schema = z.object({
-  shipping_details: z.object({
-    firstName: z.string().min(2),
-    city: z.string().min(2),
-    country: z.string().min(2),
-    email: z.string().email(),
-    phone: z.string().regex(phoneRegEx, {
-      message: 'Invalid phone number format. Please provide a valid phone number.',
-    }),
-    streetAddress: z.string().min(2),
-    postalCode: z.string().regex(postalCodeRegEx, {
-      message: 'Invalid postal code format, ex: 0000',
-    }),
-  }),
-});
-
 export default function Checkout() {
   const router = useRouter();
-  const { subtotal, discount, addShippingDetails } = useCartStore();
+  const { subtotal, discount, addShippingDetails, pay } = useCartStore();
+
+  const [active, setActive] = useState(0);
+
+  const isSmallScreen = useMediaQuery("(max-width: 768px)");
 
   const form = useCheckoutForm({
     mode: 'uncontrolled',
@@ -49,8 +37,15 @@ export default function Checkout() {
       shipping_details: initialBilling,
       paid: false,
       shipping_details_as_same_as_billing_details: true,
+      card: {
+        cvc: '',
+        expiry: '',
+        focus: 'number',
+        name: '',
+        number: '',
+      }
     },
-    validate: zodResolver(schema),
+    validate: zodResolver(active === 0 ? shipping_schema : card_schema),
   });
 
   const handleFormSubmit = (values: unknown) => {
@@ -58,11 +53,11 @@ export default function Checkout() {
     addShippingDetails(castedValues.shipping_details);
   };
 
-  const [active, setActive] = useState(0);
+
   const nextStep = () => {
-    if (active === 0) {
-      form.onSubmit(handleFormSubmit);
-    }
+    form.onSubmit(handleFormSubmit);
+
+    if (active === 2) pay()
 
     if (form.isValid()) setActive((current) => (current < 3 ? current + 1 : current));
   };
@@ -71,14 +66,14 @@ export default function Checkout() {
   return (
     <CheckoutFormProvider form={form}>
       <form onSubmit={form.onSubmit(handleFormSubmit)}>
-        <Stepper active={active} onStepClick={setActive}>
-          <Stepper.Step label="Details" description="Billing & Shipping details">
+        <Stepper size='xs' active={active} onStepClick={setActive}>
+          <Stepper.Step label="Details" description={!isSmallScreen && "Billing & Shipping details"}>
             <Address />
           </Stepper.Step>
-          <Stepper.Step label="Payment" description={`Make payment $ ${subtotal - discount}`}>
+          <Stepper.Step label="Payment" description={(!isSmallScreen ? "Make payment" : "") + "$ " + (subtotal - discount)}>
             <Payment />
           </Stepper.Step>
-          <Stepper.Step label="Confirmation" description="List of orders">
+          <Stepper.Step label="Confirmation" description={!isSmallScreen && "List of orders"}>
             <Confirmation />
           </Stepper.Step>
           <Stepper.Completed>
@@ -91,14 +86,14 @@ export default function Checkout() {
           </Stepper.Completed>
         </Stepper>
 
-        <Group justify="center" mt="xl">
+        {active !== 3 && <Group justify="center" mt="xl">
           <Button variant="default" onClick={prevStep}>
             Back
           </Button>
           <Button type="submit" onClick={nextStep}>
-            Next step
+            {active === 2 ? "Pay" : "Next step"}
           </Button>
-        </Group>
+        </Group>}
       </form>
     </CheckoutFormProvider>
   );

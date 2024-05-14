@@ -2,16 +2,11 @@ import { Box, Flex, InputBase, TextInput, Paper } from "@mantine/core";
 import { IMaskInput } from "react-imask";
 import { ChangeEventHandler, useState } from "react";
 import Card, { Focused } from 'react-credit-cards-2';
-
-interface ICard {
-  cvc: string,
-  expiry: string,
-  focus: Focused,
-  name: string,
-  number: string,
-}
+import { ICard, useCheckoutFormCtx } from "./checkout-form.context";
+import { useMediaQuery } from "@mantine/hooks";
 
 export default function Payment() {
+  const form = useCheckoutFormCtx()
   const [card, setCard] = useState({
     cvc: '',
     expiry: '',
@@ -20,9 +15,12 @@ export default function Payment() {
     number: '',
   } as ICard)
 
+  const isSmallScreen = useMediaQuery("(max-width: 768px)");
+
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (evt) => {
     const { name, value } = evt.target;
     setCard((prev) => ({ ...prev, [name]: value }));
+    form.setFieldValue('card.'+name, value)
   }
 
   const handleInputFocus: ChangeEventHandler<HTMLInputElement> = (evt) => {
@@ -31,7 +29,7 @@ export default function Payment() {
   }
 
   return (
-    <Flex justify="center">
+    <Flex justify="center" direction={isSmallScreen ? "column" : "row"}>
       <Box pr={{ xs: 'md', md: 0 }} mb="md">
         <Paper px="md" style={{ maxWidth: 350 }}>
           <Card
@@ -51,6 +49,7 @@ export default function Payment() {
           w={300}
           name="number"
           withAsterisk
+          error={form.errors['card.number']}
           placeholder="Card number"
           mask="0000 0000 0000 0000"
           value={card.number}
@@ -62,6 +61,7 @@ export default function Payment() {
           mb="xs"
           w={300}
           name="name"
+          error={form.errors['card.name']}
           withAsterisk
           placeholder="Name"
           value={card.name}
@@ -76,6 +76,7 @@ export default function Payment() {
             mr="xs"
             w={120}
             name="expiry"
+            error={form.errors['card.expiry']}
             withAsterisk
             placeholder="MM / YY"
             mask="00 / 00"
@@ -90,6 +91,7 @@ export default function Payment() {
             w={90}
             name="cvc"
             withAsterisk
+            error={form.errors['card.cvc']}
             placeholder="CVC"
             mask="000"
             value={card.cvc}

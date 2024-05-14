@@ -1,11 +1,8 @@
 import useCartStore from "@/store/cartStore";
-import { Button, Flex, Text, Title, Divider } from "@mantine/core";
-import { IFormValues, useCheckoutFormCtx } from "./checkout-form.context";
+import { Flex, Text, Title, Divider } from "@mantine/core";
 
 export default function Confirmation() {
-  const { subtotal, discount, pay, cart } = useCartStore();
-  const form = useCheckoutFormCtx();
-  const val = form.getValues() as IFormValues;
+  const { subtotal, discount, cart } = useCartStore();
 
   return (
     <Flex direction="column" gap="md">
@@ -33,12 +30,6 @@ export default function Confirmation() {
       <Flex justify="space-between" align="center">
         <Title order={2}>Total:</Title>
         <Title order={2}>$ {subtotal - discount}</Title>
-      </Flex>
-      <Divider />
-      <Flex>
-        <Button fullWidth variant="filled" radius="md" onClick={pay}>
-          Pay Now
-        </Button>
       </Flex>
     </Flex>
   );

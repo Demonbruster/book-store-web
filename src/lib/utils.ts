@@ -14,3 +14,5 @@ export const generateRandomList = <T>(list: T[], count: number): T[] => {
 
 export const phoneRegEx = /^\+(?:[0-9] ?){6,14}[0-9]$/;
 export const postalCodeRegEx = /^\d{4}$/;
+export const cardExpireRegEx =/^(0[1-9]|1[0-2])\s\/\s\d{2}$/
+export const cardNumberRegEx = /^\d{4}\s\d{4}\s\d{4}\s\d{4}$/;
